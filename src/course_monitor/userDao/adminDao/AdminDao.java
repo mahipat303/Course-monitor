@@ -24,6 +24,8 @@ public interface AdminDao {
 
 	// • Create, Update, View Batch. A batch is related to a course
 	public String createBatch(Batch batch) throws BatchException;
+	
+	
 
 	// • Allocate faculty to a batch.
 	public String AllocateFacultyToBatch(int facultyId, String batchId) throws BatchException, FacultyException;
