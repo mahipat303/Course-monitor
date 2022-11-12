@@ -1,6 +1,5 @@
 package course_monitor.model;
 
-import java.sql.Date;
 
 public class Batch {
 
@@ -8,14 +7,14 @@ public class Batch {
 	private String CourseId;
 	private int facultyId;
 	private int numberOfStudent;
-	private Date startDate;
+	private String startDate;
 	private int durationDays;
 
 	public Batch() {
 
 	}
 
-	public Batch(String batchId, String courseId, int facultyId, int numberOfStudent, Date startDate,
+	public Batch(String batchId, String courseId, int facultyId, int numberOfStudent, String startDate,
 			int durationDays) {
 		super();
 		this.batchId = batchId;
@@ -58,12 +57,11 @@ public class Batch {
 		this.numberOfStudent = numberOfStudent;
 	}
 
-	public Date getStartDate() {
+	public String getStartDate() {
 		return startDate;
 	}
-	
 
-	public void setStartDate(Date startDate) {
+	public void setStartDate(String startDate) {
 		this.startDate = startDate;
 	}
 
@@ -75,11 +73,10 @@ public class Batch {
 		this.durationDays = durationDays;
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
 	public String toString() {
 		return "Batch [batchId=" + batchId + ", CourseId=" + CourseId + ", facultyId=" + facultyId
-				+ ", numberOfStudent=" + numberOfStudent + ", startDate=" + startDate.getDate() + ", durationDays=" + durationDays
+				+ ", numberOfStudent=" + numberOfStudent + ", startDate=" + startDate + ", durationDays=" + durationDays
 				+ "]";
 	}
 
