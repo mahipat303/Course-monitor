@@ -35,7 +35,7 @@ public class AdminDaoImpl implements AdminDao {
 			if (rs.next()) {
 				message = "welcome back " + username;
 			} else {
-				message = "invalid Admin";
+				throw new AdminException("invalid Admin");
 			}
 
 		} catch (SQLException e) {

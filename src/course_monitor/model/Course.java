@@ -14,7 +14,7 @@ public class Course {
 	public Course(String courseId, String courseName, int courseFee, String courseDescription) {
 		super();
 		this.courseId = courseId;
-		CourseName = courseName;
+		this.CourseName = courseName;
 		this.courseFee = courseFee;
 		this.courseDescription = courseDescription;
 	}
