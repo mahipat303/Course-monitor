@@ -14,15 +14,17 @@ public class FacultyMenu {
 	public int login() {
 
 		int num = 0;
+		String username;
+		String password;
 
 		Scanner sc = new Scanner(System.in);
 
 		System.out.println("Enter faculty email :- ");
-		String username = sc.nextLine();
+		username = sc.nextLine();
 
 		System.out.println("Enter faculty password :- ");
-		
-		String password = sc.nextLine();
+
+		password = sc.nextLine();
 
 		FacultyDao fdo = new FacultyDaoImpl();
 
@@ -54,14 +56,20 @@ public class FacultyMenu {
 
 	public int updatePasswordUseCase() {
 		int num = 0;
-		Scanner sc = new Scanner(System.in);
+		int id=0;
+		String password;
+		try {
+			Scanner sc = new Scanner(System.in);
 
-		System.out.println("Enter faculty ID :- ");
-		int id = sc.nextInt();
+			System.out.println("Enter faculty ID :- ");
+			id = sc.nextInt();
 
-		System.out.println("Enter new password :- ");
-		String password = sc.next();
-
+			System.out.println("Enter new password :- ");
+			password = sc.next();
+		} catch (Exception e1) {
+			System.out.println("Enter valid input..");
+			return 0;
+		}
 		FacultyDao fdo = new FacultyDaoImpl();
 
 		try {
@@ -72,7 +80,7 @@ public class FacultyMenu {
 			num = 1;
 
 		} catch (FacultyException e) {
-
+			Scanner sc = new Scanner(System.in);
 			System.out.println(e.getMessage());
 			System.out.println();
 			System.out.println("Want to Try again?");
@@ -92,14 +100,21 @@ public class FacultyMenu {
 
 	public int getCoursePlanUseCase() {
 		int num = 0;
-		Scanner sc = new Scanner(System.in);
+		int fId;
+		String bId;
+		try {
+			Scanner sc = new Scanner(System.in);
 
-		System.out.println("Enter faculty ID :- ");
-		int fId = sc.nextInt();
+			System.out.println("Enter faculty ID :- ");
+			fId = sc.nextInt();
 
-		System.out.println("Enter batch ID :- ");
-		sc.nextLine();
-		String bId = sc.nextLine();
+			System.out.println("Enter batch ID :- ");
+			sc.nextLine();
+			bId = sc.nextLine();
+		} catch (Exception e1) {
+			System.out.println("enter valid input..");
+			return 0;
+		}
 
 		FacultyDao fdo = new FacultyDaoImpl();
 
@@ -115,7 +130,7 @@ public class FacultyMenu {
 			num = 1;
 
 		} catch (CoursePlanException e) {
-
+			Scanner sc = new Scanner(System.in);
 			System.out.println(e.getMessage());
 			System.out.println();
 			System.out.println("Want to Try again?");
@@ -135,19 +150,29 @@ public class FacultyMenu {
 
 	public int fillDayWisePlannerUseCase() {
 		int num = 0;
+		String bId = null;
+		int day = 0;
+		int fId = 0;
+		String topic = null;
 		Scanner sc = new Scanner(System.in);
-		System.out.println("Enter batch ID :- ");
-		String bId = sc.nextLine();
+		try {
+			System.out.println("Enter batch ID :- ");
+			bId = sc.nextLine();
 
-		System.out.println("Enter day :- ");
-		int day = sc.nextInt();
+			System.out.println("Enter day :- ");
+			day = sc.nextInt();
 
-		System.out.println("Enter faculty ID :- ");
-		int fId = sc.nextInt();
+			System.out.println("Enter faculty ID :- ");
+			fId = sc.nextInt();
 
-		System.out.println("Enter topic :- ");
-		sc.nextLine();
-		String topic = sc.next();
+			System.out.println("Enter topic :- ");
+			sc.nextLine();
+			topic = sc.next();
+
+		} catch (Exception e) {
+			System.out.println("enter valid input");
+			return 0;
+		}
 
 		FacultyDao fdo = new FacultyDaoImpl();
 
@@ -179,15 +204,23 @@ public class FacultyMenu {
 
 	public int changeStatusOfPlanUseCase() {
 		int num = 0;
+		String bId = null;
+		int day = 0;
+		int fId = 0;
 		Scanner sc = new Scanner(System.in);
-		System.out.println("Enter batch ID :- ");
-		String bId = sc.nextLine();
+		try {
+			System.out.println("Enter batch ID :- ");
+			bId = sc.nextLine();
 
-		System.out.println("Enter day :- ");
-		int day = sc.nextInt();
+			System.out.println("Enter day :- ");
+			day = sc.nextInt();
 
-		System.out.println("Enter faculty ID :- ");
-		int fId = sc.nextInt();
+			System.out.println("Enter faculty ID :- ");
+			fId = sc.nextInt();
+		} catch (Exception e) {
+			System.out.println("enter valid input...");
+			return 0;
+		}
 
 		FacultyDao fdo = new FacultyDaoImpl();
 
