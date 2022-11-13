@@ -49,22 +49,29 @@ public class AdminMenu {
 	}
 
 	public int createCourse() {
-
+		String id;
+		String name = null;
 		int num = 0;
+		int fee = 0;
+		String Desc = null;
 		Scanner sc = new Scanner(System.in);
+		try {
+			System.out.println("Enter course Id :- ");
+			id = sc.nextLine();
 
-		System.out.println("Enter course Id :- ");
-		String id = sc.nextLine();
+			System.out.println("Enter course Name :- ");
+			name = sc.nextLine();
 
-		System.out.println("Enter course Name :- ");
-		String name = sc.nextLine();
+			System.out.println("Enter course fee :- ");
+			fee = sc.nextInt();
 
-		System.out.println("Enter course fee :- ");
-		int fee = sc.nextInt();
-
-		System.out.println("Enter course Description :- ");
-		sc.nextLine();
-		String Desc = sc.nextLine();
+			System.out.println("Enter course Description :- ");
+			sc.nextLine();
+			Desc = sc.nextLine();
+		} catch (Exception e) {
+			System.out.println("enter valid input...");
+			return 0;
+		}
 
 		AdminDao ado = new AdminDaoImpl();
 		Course course = new Course(id, name, fee, Desc);
@@ -92,12 +99,18 @@ public class AdminMenu {
 	public boolean updateCourseFee() {
 		boolean flag = false;
 		Scanner sc = new Scanner(System.in);
+		String id = null;
+		int fee = 0;
+		try {
+			System.out.println("Enter course Id :- ");
+			id = sc.nextLine();
 
-		System.out.println("Enter course Id :- ");
-		String id = sc.nextLine();
-
-		System.out.println("Enter course fee :- ");
-		int fee = sc.nextInt();
+			System.out.println("Enter course fee :- ");
+			fee = sc.nextInt();
+		} catch (Exception e) {
+			System.out.println("enter valid input...");
+			return false;
+		}
 
 		AdminDao ado = new AdminDaoImpl();
 
@@ -122,6 +135,7 @@ public class AdminMenu {
 
 	public boolean updateCourseDescription() {
 		boolean flag = false;
+
 		Scanner sc = new Scanner(System.in);
 
 		System.out.println("Enter course Id :- ");
@@ -214,25 +228,34 @@ public class AdminMenu {
 	public boolean createBatch() {
 
 		boolean flag = false;
+		String bId = null;
+		String cId = null;
+		int students = 0;
+		String date = null;
+		int duration = 0;
 		Scanner sc = new Scanner(System.in);
+		try {
+			System.out.println("Enter batch Id :- ");
+			bId = sc.nextLine();
 
-		System.out.println("Enter batch Id :- ");
-		String bId = sc.nextLine();
+			System.out.println("Enter course Id :- ");
+			cId = sc.nextLine();
 
-		System.out.println("Enter course Id :- ");
-		String cId = sc.nextLine();
+			System.out.println("Enter number of students :- ");
 
-		System.out.println("Enter number of students :- ");
+			students = sc.nextInt();
 
-		int students = sc.nextInt();
+			System.out.println("Enter batch start date :- ");
+			sc.nextLine();
+			date = sc.nextLine();
 
-		System.out.println("Enter batch start date :- ");
-		sc.nextLine();
-		String date = sc.nextLine();
+			System.out.println("Enter duration in days :- ");
+			duration = sc.nextInt();
 
-		System.out.println("Enter duration in days :- ");
-		
-		int duration = sc.nextInt();
+		} catch (Exception e) {
+			System.out.println("enter valid input...");
+			return false;
+		}
 
 		AdminDao ado = new AdminDaoImpl();
 
@@ -259,12 +282,18 @@ public class AdminMenu {
 	public boolean AllocateFacultyToBatch() {
 		boolean flag = false;
 		Scanner sc = new Scanner(System.in);
+		String bId = null;
+		int fId = 0;
+		try {
+			System.out.println("Enter batch Id :- ");
+			bId = sc.nextLine();
 
-		System.out.println("Enter batch Id :- ");
-		String bId = sc.nextLine();
-
-		System.out.println("Enter faculty Id :- ");
-		int fId = sc.nextInt();
+			System.out.println("Enter faculty Id :- ");
+			fId = sc.nextInt();
+		} catch (Exception e) {
+			System.out.println("enter valid input...");
+			return false;
+		}
 
 		AdminDao ado = new AdminDaoImpl();
 
@@ -334,13 +363,19 @@ public class AdminMenu {
 
 	public boolean updateNumberOfStudentInBatch() {
 		boolean flag = false;
+		String id = null;
+		int number = 0;
 		Scanner sc = new Scanner(System.in);
+		try {
+			System.out.println("Enter Batch Id :- ");
+			id = sc.nextLine();
 
-		System.out.println("Enter Batch Id :- ");
-		String id = sc.nextLine();
-
-		System.out.println("Enter number of student :- ");
-		int number = sc.nextInt();
+			System.out.println("Enter number of student :- ");
+			number = sc.nextInt();
+		} catch (Exception e) {
+			System.out.println("enter valid input...");
+			return false;
+		}
 
 		AdminDao ado = new AdminDaoImpl();
 
@@ -460,13 +495,20 @@ public class AdminMenu {
 
 	public boolean updateFacultyNameUseCase() {
 		boolean flag = false;
+		int Id = 0;
+		String name = null;
 		Scanner sc = new Scanner(System.in);
+		try {
+			System.out.println("Enter faculty Id :- ");
+			Id = sc.nextInt();
 
-		System.out.println("Enter faculty Id :- ");
-		int Id = sc.nextInt();
+			System.out.println("Enter faculty Name :- ");
+			name = sc.next();
 
-		System.out.println("Enter faculty Name :- ");
-		String name = sc.next();
+		} catch (Exception e) {
+			System.out.println("enter valid input...");
+			return false;
+		}
 
 		AdminDao ado = new AdminDaoImpl();
 
