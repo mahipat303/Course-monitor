@@ -1,4 +1,4 @@
-package course_monitor.utility;
+package course_monitor.exception;
 
 public class CourseException extends Exception {
 	

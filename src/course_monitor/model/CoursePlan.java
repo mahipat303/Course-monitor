@@ -21,6 +21,14 @@ public class CoursePlan {
 		this.status = status;
 	}
 
+	public CoursePlan(String batchId, int dayNumber, String topic) {
+		super();
+		this.batchId = batchId;
+		this.dayNumber = dayNumber;
+		this.topic = topic;
+		
+	}
+
 	public int getPlanId() {
 		return planId;
 	}

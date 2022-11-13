@@ -18,8 +18,18 @@ public class Batch {
 			int durationDays) {
 		super();
 		this.batchId = batchId;
-		CourseId = courseId;
+		this.CourseId = courseId;
 		this.facultyId = facultyId;
+		this.numberOfStudent = numberOfStudent;
+		this.startDate = startDate;
+		this.durationDays = durationDays;
+	}
+	
+	public Batch(String batchId, String courseId, int numberOfStudent, String startDate,
+			int durationDays) {
+		
+		this.batchId = batchId;
+		this.CourseId = courseId;
 		this.numberOfStudent = numberOfStudent;
 		this.startDate = startDate;
 		this.durationDays = durationDays;

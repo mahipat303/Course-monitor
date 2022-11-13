@@ -2,9 +2,9 @@ package course_monitor.userDao.facultyDao;
 
 import java.util.List;
 
+import course_monitor.exception.CoursePlanException;
+import course_monitor.exception.FacultyException;
 import course_monitor.model.CoursePlan;
-import course_monitor.utility.CoursePlanException;
-import course_monitor.utility.FacultyException;
 
 public interface FacultyDao {
 

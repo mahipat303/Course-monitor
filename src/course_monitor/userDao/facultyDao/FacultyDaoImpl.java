@@ -6,10 +6,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
+import course_monitor.exception.CoursePlanException;
+import course_monitor.exception.FacultyException;
 import course_monitor.model.CoursePlan;
 import course_monitor.utility.CourseConnection;
-import course_monitor.utility.CoursePlanException;
-import course_monitor.utility.FacultyException;
 
 public class FacultyDaoImpl implements FacultyDao {
 
@@ -63,10 +64,7 @@ public class FacultyDaoImpl implements FacultyDao {
 					planList.add(new CoursePlan(rs.getInt("planId"), rs.getString("batchId"), rs.getInt("dayNumber"),
 							rs.getString("topic"), rs.getString("status")));
 				}
-				if (!rs.next()) {
-					throw new CoursePlanException("course plant is not available for this batch");
-				}
-
+		
 			} else {
 				throw new CoursePlanException("you dont have access to this batch");
 			}
@@ -96,7 +94,7 @@ public class FacultyDaoImpl implements FacultyDao {
 			if (rs.next()) {
 				message = "welcome back " + rs.getString("Name");
 			} else {
-				message = "invalid Admin";
+				throw new FacultyException("invalid user");
 			}
 
 		} catch (SQLException e) {
