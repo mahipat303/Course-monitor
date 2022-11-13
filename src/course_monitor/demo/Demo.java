@@ -283,6 +283,10 @@ public class Demo {
 			}
 
 		}
+		if (res) {
+			Demo.showAdminMenu();
+			return;
+		}
 
 	}
 
@@ -308,6 +312,10 @@ public class Demo {
 				Demo.showAdminMenu();
 			}
 
+		}
+		if (res) {
+			Demo.showAdminMenu();
+			return;
 		}
 
 	}
@@ -335,6 +343,10 @@ public class Demo {
 			}
 
 		}
+		if (res) {
+			Demo.showAdminMenu();
+			return;
+		}
 
 	}
 
@@ -360,6 +372,11 @@ public class Demo {
 				Demo.showAdminMenu();
 			}
 
+		}
+
+		if (res) {
+			Demo.showAdminMenu();
+			return;
 		}
 
 	}

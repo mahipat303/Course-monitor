@@ -64,7 +64,7 @@ public class FacultyDaoImpl implements FacultyDao {
 					planList.add(new CoursePlan(rs.getInt("planId"), rs.getString("batchId"), rs.getInt("dayNumber"),
 							rs.getString("topic"), rs.getString("status")));
 				}
-		
+
 			} else {
 				throw new CoursePlanException("you dont have access to this batch");
 			}
@@ -92,7 +92,7 @@ public class FacultyDaoImpl implements FacultyDao {
 			ResultSet rs = ps.executeQuery();
 
 			if (rs.next()) {
-				message = "welcome back " + rs.getString("Name");
+				message = "welcome back " + rs.getString("Name")+" your ID is "+rs.getInt("facultyId");
 			} else {
 				throw new FacultyException("invalid user");
 			}
@@ -122,10 +122,12 @@ public class FacultyDaoImpl implements FacultyDao {
 
 			if (rs.next()) {
 
-				PreparedStatement ps2 = conn.prepareStatement("update courseplan set dayNumber = ? and topic = ? ");
+				PreparedStatement ps2 = conn
+						.prepareStatement("update courseplan set topic = ? where dayNumber = ? and batchId = ?");
 
-				ps2.setInt(1, dayNumber);
-				ps2.setString(2, topic);
+				ps2.setString(1, topic);
+				ps2.setInt(2, dayNumber);
+				ps2.setString(3, batchId);
 
 				int row = ps2.executeUpdate();
 				if (row > 0) {
@@ -160,7 +162,10 @@ public class FacultyDaoImpl implements FacultyDao {
 
 			if (rs.next()) {
 
-				PreparedStatement ps2 = conn.prepareStatement("update courseplan set status = 'completed'");
+				PreparedStatement ps2 = conn.prepareStatement(
+						"update courseplan set status = 'completed' where dayNumber = ? and batchId = ?");
+				ps2.setInt(1, dayNumber);
+				ps2.setString(2, batchId);
 
 				int row = ps2.executeUpdate();
 
