@@ -1,1 +1,3 @@
 Course Monitoring System
+So the Automated Course Monitoring System will keep the records of all the courses,batches,faculties and the daywise update for every batch.
+It will also help the Faculty Head to maintain the course plan .
