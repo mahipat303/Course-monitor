@@ -5,17 +5,19 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
+import course_monitor.exception.AdminException;
+import course_monitor.exception.BatchException;
+import course_monitor.exception.CourseException;
+import course_monitor.exception.CoursePlanException;
+import course_monitor.exception.FacultyException;
 import course_monitor.model.Batch;
 import course_monitor.model.Course;
 import course_monitor.model.CoursePlan;
 import course_monitor.model.Faculty;
-import course_monitor.utility.AdminException;
-import course_monitor.utility.BatchException;
 import course_monitor.utility.CourseConnection;
-import course_monitor.utility.CourseException;
-import course_monitor.utility.CoursePlanException;
-import course_monitor.utility.FacultyException;
 
 public class AdminDaoImpl implements AdminDao {
 
@@ -134,7 +136,7 @@ public class AdminDaoImpl implements AdminDao {
 
 		try (Connection conn = CourseConnection.provideConnection()) {
 
-			PreparedStatement ps = conn.prepareStatement("update course set description = ? where courseId = ?");
+			PreparedStatement ps = conn.prepareStatement("update course set courseName = ? where courseId = ?");
 
 			ps.setString(1, courseName);
 			ps.setString(2, courseId);
@@ -190,10 +192,10 @@ public class AdminDaoImpl implements AdminDao {
 
 		try (Connection conn = CourseConnection.provideConnection()) {
 
-			PreparedStatement ps = conn.prepareStatement("update batch set facultyId = ? where batchId = ?");
+			PreparedStatement ps = conn.prepareStatement("update batch set facultyId = ? where batchId = ? ");
 
 			ps.setInt(1, facultyId);
-			ps.setString(1, batchId);
+			ps.setString(2, batchId);
 
 			int row = ps.executeUpdate();
 
@@ -216,14 +218,14 @@ public class AdminDaoImpl implements AdminDao {
 
 		try (Connection conn = CourseConnection.provideConnection()) {
 
-			PreparedStatement ps = conn.prepareStatement("insert in batch values(?,?,?,?,?,?)");
+			PreparedStatement ps = conn.prepareStatement(
+					"insert into batch(batchId,courseId,numberofstudent,startDate,durationInDays) values(?,?,?,?,?)");
 
 			ps.setString(1, batch.getBatchId());
 			ps.setString(2, batch.getCourseId());
-			ps.setInt(3, batch.getFacultyId());
-			ps.setInt(4, batch.getNumberOfStudent());
-			ps.setString(5, batch.getStartDate());
-			ps.setInt(6, batch.getDurationDays());
+			ps.setInt(3, batch.getNumberOfStudent());
+			ps.setString(4, batch.getStartDate());
+			ps.setInt(5, batch.getDurationDays());
 
 			int row = ps.executeUpdate();
 
@@ -304,8 +306,8 @@ public class AdminDaoImpl implements AdminDao {
 
 		try (Connection conn = CourseConnection.provideConnection()) {
 
-			PreparedStatement ps = conn.prepareStatement(
-					"insert into faculty('name','address','mobile','email','password') values(?,?,?,?,?)");
+			PreparedStatement ps = conn
+					.prepareStatement("insert into faculty(name,address,mobile,email,password) values(?,?,?,?,?)");
 
 			ps.setString(1, faculty.getFacultyname());
 			ps.setString(2, faculty.getFacultyaddress());
@@ -316,7 +318,7 @@ public class AdminDaoImpl implements AdminDao {
 			int row = ps.executeUpdate();
 
 			if (row > 0) {
-				message = "course created successfuly...";
+				message = "Faculty created successfuly...";
 			}
 
 		} catch (SQLException e) {
@@ -372,6 +374,8 @@ public class AdminDaoImpl implements AdminDao {
 
 			if (row > 0) {
 				message = "name updated successfuly...";
+			} else {
+				message = "faculty id is invlid...";
 			}
 
 		} catch (SQLException e) {
@@ -398,6 +402,8 @@ public class AdminDaoImpl implements AdminDao {
 
 			if (row > 0) {
 				message = "Address updated successfuly...";
+			} else {
+				message = "faculty id is invlid...";
 			}
 
 		} catch (SQLException e) {
@@ -424,6 +430,8 @@ public class AdminDaoImpl implements AdminDao {
 
 			if (row > 0) {
 				message = "Mobile updated successfuly...";
+			} else {
+				message = "faculty id is invlid...";
 			}
 
 		} catch (SQLException e) {
@@ -436,8 +444,8 @@ public class AdminDaoImpl implements AdminDao {
 	}
 
 	@Override
-	public CoursePlan getCoursePlanByBatch(String batchId) throws CoursePlanException {
-		CoursePlan cp = null;
+	public List<CoursePlan> getCoursePlanByBatch(String batchId) throws CoursePlanException {
+		List<CoursePlan> cpList = new ArrayList<>();
 
 		try (Connection conn = CourseConnection.provideConnection()) {
 
@@ -447,14 +455,13 @@ public class AdminDaoImpl implements AdminDao {
 
 			ResultSet rs = ps.executeQuery();
 
-			if (rs.next()) {
+			while (rs.next()) {
 
-				cp = new CoursePlan(rs.getInt("planId"), rs.getString("batchId"), rs.getInt("dayNumber"),
-						rs.getString("topic"), rs.getString("status"));
+				cpList.add(new CoursePlan(rs.getInt("planId"), rs.getString("batchId"), rs.getInt("dayNumber"),
+						rs.getString("topic"), rs.getString("status")));
 
-			} else {
-				throw new CoursePlanException("no course Plan is there for this ID");
-			}
+			} 
+
 
 		} catch (SQLException e) {
 
@@ -462,7 +469,7 @@ public class AdminDaoImpl implements AdminDao {
 
 		}
 
-		return cp;
+		return cpList;
 	}
 
 	@Override
@@ -502,11 +509,12 @@ public class AdminDaoImpl implements AdminDao {
 		try (Connection conn = CourseConnection.provideConnection()) {
 
 			PreparedStatement ps = conn
-					.prepareStatement("insert in coursePlan(batchId,dayNumber,topic) values(?,?,?,?,?)");
+					.prepareStatement("insert into coursePlan(batchId,dayNumber,topic) values(?,?,?) ");
 
 			ps.setString(1, courseplan.getBatchId());
 			ps.setInt(2, courseplan.getDayNumber());
 			ps.setString(3, courseplan.getTopic());
+//			ps.setString(4, courseplan.getStatus());
 
 			int row = ps.executeUpdate();
 

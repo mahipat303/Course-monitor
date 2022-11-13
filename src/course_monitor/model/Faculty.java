@@ -22,6 +22,15 @@ public class Faculty {
 		this.email = email;
 		this.password = password;
 	}
+	public Faculty(String facultyname, String facultyaddress, String mobile, String email,
+			String password) {
+		super();
+		this.facultyname = facultyname;
+		this.facultyaddress = facultyaddress;
+		this.mobile = mobile;
+		this.email = email;
+		this.password = password;
+	}
 
 	public int getFacultyid() {
 		return facultyid;

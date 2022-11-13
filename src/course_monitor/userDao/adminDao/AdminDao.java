@@ -1,14 +1,16 @@
 package course_monitor.userDao.adminDao;
 
+import java.util.List;
+
+import course_monitor.exception.AdminException;
+import course_monitor.exception.BatchException;
+import course_monitor.exception.CourseException;
+import course_monitor.exception.CoursePlanException;
+import course_monitor.exception.FacultyException;
 import course_monitor.model.Batch;
 import course_monitor.model.Course;
 import course_monitor.model.CoursePlan;
 import course_monitor.model.Faculty;
-import course_monitor.utility.AdminException;
-import course_monitor.utility.BatchException;
-import course_monitor.utility.CourseException;
-import course_monitor.utility.CoursePlanException;
-import course_monitor.utility.FacultyException;
 
 public interface AdminDao {
 
@@ -51,7 +53,7 @@ public interface AdminDao {
 	public String createCoursePlan(CoursePlan courseplan) throws CoursePlanException;
 	
 	//•	 Generate Report for every batch.
-	public CoursePlan getCoursePlanByBatch(String batchId) throws CoursePlanException;
+	public List<CoursePlan> getCoursePlanByBatch(String batchId) throws CoursePlanException;
 	
 	
 	//•	View the Day wise update of every batch.
