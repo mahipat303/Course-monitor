@@ -10,19 +10,25 @@ public class Demo {
 	public static void user() {
 
 		Scanner sc = new Scanner(System.in);
-
+		System.out.println("Welcome To Course Monitor System");
 		System.out.println("please select usertype");
 		System.out.println("************************");
 		System.out.println();
 		System.out.println("1.Admin");
 		System.out.println("2.Faculty");
 
-		int type = sc.nextInt();
-		if (type == 1) {
-			Demo.adminLogin();
-		} else {
-			Demo.facultyLogin();
+		try {
+			int type = sc.nextInt();
+			if (type == 1) {
+				Demo.adminLogin();
+			} else {
+				Demo.facultyLogin();
+			}
+		} catch (Exception e) {
+			System.out.println("please enter valid input...");
+			Demo.user();
 		}
+
 	}
 
 	public static void facultyLogin() {
@@ -151,7 +157,9 @@ public class Demo {
 		System.out.println("11.Course Plan Batch vise");
 		System.out.println("12.Day wise course plan of batch");
 		System.out.println("13.create course plan");
-		System.out.println("14.logout");
+		System.out.println("14.view All batch detail");
+		System.out.println("15.view All course detail");
+		System.out.println("16.logout");
 
 		int res = sc.nextInt();
 		if (res == 1) {
@@ -224,6 +232,12 @@ public class Demo {
 
 			Demo.createCourseplan();
 		} else if (res == 14) {
+
+			Demo.viewAllBatch();
+		} else if (res == 15) {
+
+			Demo.viewAllCourseDetail();
+		} else if (res == 16) {
 
 			Demo.user();
 		}
@@ -381,6 +395,37 @@ public class Demo {
 
 	}
 
+	public static void viewAllCourseDetail() {
+		Scanner sc = new Scanner(System.in);
+		AdminMenu Am = new AdminMenu();
+		boolean res = Am.viewAllCourseDetail();
+
+		if (res) {
+			Demo.showAdminMenu();
+			return;
+		}
+
+		while (!res) {
+
+			System.out.println("yes or no");
+			System.out.println(":- ");
+			String ans = sc.next();
+
+			if (ans.equals("yes")) {
+				res = Am.viewAllCourseDetail();
+			} else {
+				Demo.showAdminMenu();
+			}
+
+		}
+
+		if (res) {
+			Demo.showAdminMenu();
+			return;
+		}
+
+	}
+
 	public static void createBatch() {
 
 		Scanner sc = new Scanner(System.in);
@@ -425,6 +470,15 @@ public class Demo {
 
 		AdminMenu Am = new AdminMenu();
 		Am.viewBatchDetail();
+
+		Demo.showAdminMenu();
+
+	}
+
+	public static void viewAllBatch() {
+
+		AdminMenu Am = new AdminMenu();
+		Am.viewAllBatchDetail();
 
 		Demo.showAdminMenu();
 

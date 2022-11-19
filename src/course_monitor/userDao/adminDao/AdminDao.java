@@ -27,11 +27,15 @@ public interface AdminDao {
 	public String updateCourseName(String courseId, String courseName) throws CourseException;
 	
 	public Course getCourseDetail(String CourseId) throws CourseException;
+	
+	public List<Course> getAllCourseDetail() throws CourseException;
 
 	// • Create, Update, View Batch. A batch is related to a course
 	public String createBatch(Batch batch) throws BatchException;
 	
 	public Batch getBatchDetail(String batchId) throws BatchException;
+	
+	public List<Batch> getAllBatchDetail() throws BatchException;
 	
 	public String updateNumberOfStudentInBatch(int number , String batchId) throws BatchException;
 	
@@ -41,7 +45,7 @@ public interface AdminDao {
 	//•	Create, Update, View Faculty.
 	public String createFaculty(Faculty faculty) throws FacultyException;
 	
-	public Faculty getFacultyDetail(int facultyId) throws FacultyException;
+	public List<Faculty> getFacultyDetail() throws FacultyException;
 	
 	public String updateFacultyName(int facultyId , String facultyName) throws FacultyException;
 	
