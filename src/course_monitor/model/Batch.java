@@ -1,6 +1,5 @@
 package course_monitor.model;
 
-
 public class Batch {
 
 	private String batchId;
@@ -24,10 +23,9 @@ public class Batch {
 		this.startDate = startDate;
 		this.durationDays = durationDays;
 	}
-	
-	public Batch(String batchId, String courseId, int numberOfStudent, String startDate,
-			int durationDays) {
-		
+
+	public Batch(String batchId, String courseId, int numberOfStudent, String startDate, int durationDays) {
+
 		this.batchId = batchId;
 		this.CourseId = courseId;
 		this.numberOfStudent = numberOfStudent;
@@ -85,9 +83,8 @@ public class Batch {
 
 	@Override
 	public String toString() {
-		return "Batch [batchId=" + batchId + ", CourseId=" + CourseId + ", facultyId=" + facultyId
-				+ ", numberOfStudent=" + numberOfStudent + ", startDate=" + startDate + ", durationDays=" + durationDays
-				+ "]";
+		return "==> batchId=" + batchId + ",   CourseId=" + CourseId + ",   facultyId=" + facultyId + ",   numberOfStudent="
+				+ numberOfStudent + ",   startDate=" + startDate + ",   durationDays=" + durationDays;
 	}
 
 }

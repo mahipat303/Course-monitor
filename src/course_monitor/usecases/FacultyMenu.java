@@ -57,12 +57,17 @@ public class FacultyMenu {
 	public int updatePasswordUseCase() {
 		int num = 0;
 		int id=0;
+		String tempId = null;
+		
 		String password;
 		try {
 			Scanner sc = new Scanner(System.in);
 
 			System.out.println("Enter faculty ID :- ");
 			id = sc.nextInt();
+			
+			System.out.println("Enter tempId :- ");
+			tempId = sc.next();
 
 			System.out.println("Enter new password :- ");
 			password = sc.next();
@@ -73,7 +78,7 @@ public class FacultyMenu {
 		FacultyDao fdo = new FacultyDaoImpl();
 
 		try {
-			String message = fdo.updatePassword(id, password);
+			String message = fdo.updatePassword(id, password,tempId);
 
 			System.out.println(message);
 

@@ -71,8 +71,8 @@ public class CoursePlan {
 
 	@Override
 	public String toString() {
-		return "CoursePlan [planId=" + planId + ", batchId=" + batchId + ", dayNumber=" + dayNumber + ", topic=" + topic
-				+ ", status=" + status + "]";
+		return "==> batchId=" + batchId + ",  day=" + dayNumber + ",  topic=" + topic
+				+ ",  status=" + status;
 	}
 
 }

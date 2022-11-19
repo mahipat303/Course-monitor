@@ -1,6 +1,7 @@
 package course_monitor.usecases;
 
 import java.util.List;
+import java.util.Random;
 import java.util.Scanner;
 
 import course_monitor.exception.AdminException;
@@ -225,6 +226,33 @@ public class AdminMenu {
 		return flag;
 	}
 
+	public boolean viewAllCourseDetail() {
+		boolean flag = false;
+
+		AdminDao ado = new AdminDaoImpl();
+
+		try {
+			List<Course> course = ado.getAllCourseDetail();
+
+			for (Course course2 : course) {
+				System.out.println(course2);
+			}
+
+			System.out.println();
+
+			flag = true;
+
+		} catch (CourseException e) {
+
+			System.out.println(e.getMessage());
+			System.out.println("Want to Try again?");
+			flag = false;
+
+		}
+
+		return flag;
+	}
+
 	public boolean createBatch() {
 
 		boolean flag = false;
@@ -361,6 +389,43 @@ public class AdminMenu {
 		return flag;
 	}
 
+	public boolean viewAllBatchDetail() {
+		boolean flag = false;
+		Scanner sc = new Scanner(System.in);
+
+		AdminDao ado = new AdminDaoImpl();
+
+		try {
+			List<Batch> batch = ado.getAllBatchDetail();
+
+			for (Batch batch2 : batch) {
+				System.out.println(batch2);
+			}
+
+			System.out.println();
+
+			flag = true;
+
+		} catch (BatchException e) {
+
+			System.out.println(e.getMessage());
+			System.out.println();
+			System.out.println("Want to Try again?");
+			System.out.println("yes or no");
+			System.out.println(":- ");
+			String ans = sc.next();
+
+			if (ans.equals("yes")) {
+				flag = viewBatchDetail();
+			} else {
+				flag = false;
+			}
+
+		}
+
+		return flag;
+	}
+
 	public boolean updateNumberOfStudentInBatch() {
 		boolean flag = false;
 		String id = null;
@@ -422,9 +487,24 @@ public class AdminMenu {
 
 		System.out.println("Enter faculty email :- ");
 		String email = sc.next();
+		
+//		***********
+		Random rand = new Random(62);
 
-		System.out.println("Enter faculty password :- ");
-		String password = sc.next();
+		// Characters to be included
+		String chrs = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+
+		// Generate n characters from above set and
+		// add these characters to captcha.
+		String tempId2 = "";
+		int n = 5;
+		while (n-- != 0) {
+			int index = (int) (Math.random() * 62);
+			tempId2 += chrs.charAt(index);
+		}
+
+//		***********
+		String password = tempId2;
 
 		AdminDao ado = new AdminDaoImpl();
 		Faculty faculty = new Faculty(name, address, mobile, email, password);
@@ -460,15 +540,15 @@ public class AdminMenu {
 		boolean flag = false;
 		Scanner sc = new Scanner(System.in);
 
-		System.out.println("Enter faculty Id :- ");
-		int Id = sc.nextInt();
-
 		AdminDao ado = new AdminDaoImpl();
 
 		try {
-			Faculty faculty = ado.getFacultyDetail(Id);
+			List<Faculty> faculty = ado.getFacultyDetail();
 
-			System.out.println(faculty);
+			for (Faculty faculty2 : faculty) {
+				System.out.println(faculty2);
+			}
+
 			System.out.println();
 
 			flag = true;

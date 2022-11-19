@@ -169,7 +169,6 @@ public class AdminDaoImpl implements AdminDao {
 			ResultSet rs = ps.executeQuery();
 
 			if (rs.next()) {
-				rs.getInt("courseFee");
 
 				course = new Course(rs.getString("courseId"), rs.getString("coursename"), rs.getInt("courseFee"),
 						rs.getString("description"));
@@ -184,6 +183,37 @@ public class AdminDaoImpl implements AdminDao {
 		}
 
 		return course;
+	}
+
+	@Override
+	public List<Course> getAllCourseDetail() throws CourseException {
+		List<Course> cList = new ArrayList<>();
+
+		try (Connection conn = CourseConnection.provideConnection()) {
+
+			PreparedStatement ps = conn.prepareStatement("select * from course");
+
+			ResultSet rs = ps.executeQuery();
+
+			boolean flag = false;
+
+			while (rs.next()) {
+				flag = true;
+				cList.add(new Course(rs.getString("courseId"), rs.getString("coursename"), rs.getInt("courseFee"),
+						rs.getString("description")));
+			}
+
+			if (flag == false) {
+				throw new CourseException("no course available right now...");
+			}
+
+		} catch (SQLException e) {
+
+			throw new CourseException(e.getMessage());
+
+		}
+
+		return cList;
 	}
 
 	@Override
@@ -272,6 +302,35 @@ public class AdminDaoImpl implements AdminDao {
 	}
 
 	@Override
+	public List<Batch> getAllBatchDetail() throws BatchException {
+		List<Batch> bList = new ArrayList<>();
+
+		try (Connection conn = CourseConnection.provideConnection()) {
+
+			PreparedStatement ps = conn.prepareStatement("select * from batch");
+
+			ResultSet rs = ps.executeQuery();
+			boolean flag = false;
+			while (rs.next()) {
+				flag = true;
+				bList.add(new Batch(rs.getString("batchId"), rs.getString("courseId"), rs.getInt("facultyId"),
+						rs.getInt("numberOfStudent"), rs.getString("startdate"), rs.getInt("durationInDays")));
+			}
+
+			if (flag == false) {
+				throw new BatchException("no batch is runnning right now");
+			}
+
+		} catch (SQLException e) {
+
+			throw new BatchException(e.getMessage());
+
+		}
+
+		return bList;
+	}
+
+	@Override
 	public String updateNumberOfStudentInBatch(int number, String batchId) throws BatchException {
 		String message = null;
 
@@ -331,23 +390,23 @@ public class AdminDaoImpl implements AdminDao {
 	}
 
 	@Override
-	public Faculty getFacultyDetail(int facultyId) throws FacultyException {
-		Faculty faculty = null;
+	public List<Faculty> getFacultyDetail() throws FacultyException {
+		List<Faculty> faculty = new ArrayList<>();
 
 		try (Connection conn = CourseConnection.provideConnection()) {
 
-			PreparedStatement ps = conn.prepareStatement("select * from faculty where facultyId = ?");
-
-			ps.setInt(1, facultyId);
+			PreparedStatement ps = conn.prepareStatement("select * from faculty");
 
 			ResultSet rs = ps.executeQuery();
+			boolean flag = false;
+			while (rs.next()) {
+				flag = true;
+				faculty.add(new Faculty(rs.getInt("facultyId"), rs.getString("name"), rs.getString("address"),
+						rs.getString("mobile"), rs.getString("email"), rs.getString("password")));
+			}
 
-			if (rs.next()) {
-
-				faculty = new Faculty(rs.getInt("facultyId"), rs.getString("name"), rs.getString("address"),
-						rs.getString("mobile"), rs.getString("email"), rs.getString("password"));
-			} else {
-				throw new FacultyException("no faculty available with this ID");
+			if (flag == false) {
+				throw new FacultyException("no faculty available right now...");
 			}
 
 		} catch (SQLException e) {
@@ -460,8 +519,7 @@ public class AdminDaoImpl implements AdminDao {
 				cpList.add(new CoursePlan(rs.getInt("planId"), rs.getString("batchId"), rs.getInt("dayNumber"),
 						rs.getString("topic"), rs.getString("status")));
 
-			} 
-
+			}
 
 		} catch (SQLException e) {
 
@@ -530,6 +588,5 @@ public class AdminDaoImpl implements AdminDao {
 
 		return message;
 	}
-
 
 }

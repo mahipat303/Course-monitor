@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import course_monitor.exception.CoursePlanException;
 import course_monitor.exception.FacultyException;
@@ -15,20 +16,24 @@ import course_monitor.utility.CourseConnection;
 public class FacultyDaoImpl implements FacultyDao {
 
 	@Override
-	public String updatePassword(int facultyId, String password) throws FacultyException {
+	public String updatePassword(int facultyId, String password, String tempId) throws FacultyException {
 		String message = null;
 
 		try (Connection conn = CourseConnection.provideConnection()) {
 
-			PreparedStatement ps = conn.prepareStatement("update faculty set password = ? where facultyId = ?");
+			PreparedStatement ps = conn
+					.prepareStatement("update faculty set password = ? where facultyId = ? and tempId = ?");
 
 			ps.setString(1, password);
 			ps.setInt(2, facultyId);
+			ps.setString(3, tempId);
 
 			int row = ps.executeUpdate();
 
 			if (row > 0) {
 				message = "password updated successfuly...";
+			} else {
+				throw new FacultyException("please enter valid inputs...");
 			}
 
 		} catch (SQLException e) {
@@ -92,7 +97,48 @@ public class FacultyDaoImpl implements FacultyDao {
 			ResultSet rs = ps.executeQuery();
 
 			if (rs.next()) {
-				message = "welcome back " + rs.getString("Name")+" your ID is "+rs.getInt("facultyId");
+				int fId = rs.getInt("facultyId");
+
+//				***********
+				Random rand = new Random(62);
+
+				// Characters to be included
+				String chrs = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+
+				// Generate n characters from above set and
+				// add these characters to captcha.
+				String tempId2 = "";
+				int n = 5;
+				while (n-- != 0) {
+					int index = (int) (Math.random() * 62);
+					tempId2 += chrs.charAt(index);
+				}
+
+//				***********
+				PreparedStatement ps2 = conn.prepareStatement("update faculty set tempId = ? where facultyId = ?");
+
+				ps2.setString(1, tempId2);
+				ps2.setInt(2, fId);
+
+				int rs1 = ps2.executeUpdate();
+
+				message = "welcome back " + rs.getString("Name") + " your ID is " + rs.getInt("facultyId")
+						+ " your TempID is " + tempId2;
+
+				PreparedStatement ps3 = conn.prepareStatement("select b.batchId from batch b where facultyid = ?");
+
+				ps3.setInt(1, fId);
+
+				ResultSet rs3 = ps3.executeQuery();
+				boolean flag = false;
+				while (rs3.next()) {
+					flag = true;
+					System.out.println(rs3.getString("batchId"));
+				}
+				if (flag == false) {
+					System.out.println("you are not allocated to any batches right now...");
+				}
+
 			} else {
 				throw new FacultyException("invalid user");
 			}

@@ -12,7 +12,7 @@ public interface FacultyDao {
 	public String facultyLogin(String username, String password) throws FacultyException;
 
 //	•	Update his/her password.
-	public String updatePassword(int facultyId, String password) throws FacultyException;
+	public String updatePassword(int facultyId, String password , String tempId) throws FacultyException;
 
 //	•	View the Course Plan
 	public List<CoursePlan> getCoursePlan(String BatchId,int facultyId) throws CoursePlanException;
