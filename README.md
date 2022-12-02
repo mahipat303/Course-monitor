@@ -1,6 +1,7 @@
 
 # Course monitor
 - A individual project of Automated Course Monitoring System.
+- this will keep the records of all the courses,batches,faculties and the daywise update for every batch.
 - it is a console based project.
 - project code = money-cellar-3895
 
