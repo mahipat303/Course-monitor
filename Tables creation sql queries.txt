@@ -1,0 +1,48 @@
+create table admin
+(
+username varchar(12) primary key,
+password varchar(12)
+);
+
+
+create table faculty
+(
+facultyId int primary key auto_increment,
+Name varchar(20) not null,
+Address varchar(30) not null,
+mobile varchar(10) unique not null,
+email varchar(30) unique not null,
+password varchar(12) not null
+);
+
+create table course
+(
+courseId varchar(20) primary key,
+courseName varchar(20) not null,
+courseFee int,
+description varchar(30)
+);
+
+create table batch
+(
+batchId varchar(20) primary key,
+courseId varchar(20),
+facultyId int,
+numberOfStudent int DEFAULT 0,
+startDate date,
+durationInDays int,
+foreign key (courseId) references course(courseId),
+foreign key (facultyId) references faculty(facultyId)
+);
+
+
+create table CoursePlan
+(
+planId int primary key auto_increment,
+batchId varchar(20),
+dayNumber int,
+topic varchar(20),
+status varchar(10) default 'pending',
+foreign key (batchid) references batch(batchid)
+);
+
